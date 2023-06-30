@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stopwatch</title>
+  <style>
+    .stopwatch {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      font-size: 24px;
+    }
+
+    .button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="milliseconds">00</span>
+  </div>
+  <div class="stopwatch">
+    <button class="button" onclick="start()">Start</button>
+    <button class="button" onclick="stop()">Stop</button>
+    <button class="button" onclick="reset()">Reset</button>
+  </div>
+
+  <script>
+    var minutesLabel = document.getElementById("minutes");
+    var secondsLabel = document.getElementById("seconds");
+    var millisecondsLabel = document.getElementById("milliseconds");
+    var totalMilliseconds = 0;
+    var stopwatchInterval;
+
+    function start() {
+      stopwatchInterval = setInterval(updateTime, 10);
+    }
+
+    function stop() {
+      clearInterval(stopwatchInterval);
+    }
+
+    function reset() {
+      clearInterval(stopwatchInterval);
+      totalMilliseconds = 0;
+      minutesLabel.textContent = "00";
+      secondsLabel.textContent = "00";
+      millisecondsLabel.textContent = "00";
+    }
+
+    function updateTime() {
+      totalMilliseconds += 10;
+
+      var minutes = Math.floor((totalMilliseconds / 60000) % 60).toString().padStart(2, '0');
+      var seconds = Math.floor((totalMilliseconds / 1000) % 60).toString().padStart(2, '0');
+      var milliseconds = Math.floor((totalMilliseconds % 1000) / 10).toString().padStart(2, '0');
+
+      minutesLabel.textContent = minutes;
+      secondsLabel.textContent = seconds;
+      millisecondsLabel.textContent = milliseconds;
+    }
+  </script>
+</body>
+</html>
